@@ -1,0 +1,37 @@
+{
+  "name": "@blacksquareui/compiler",
+  "version": "0.0.1",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --no-cache",
+    "start": "tsc && node dist/app.js",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts"
+  },
+  "author": "dyooreen <dyooreen@icloud.com> (https://dyooreen.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlackSquareUI/compiler"
+  },
+  "description": "This is a package for creating css file from classes",
+  "keywords": [
+    "BlackSquareUI",
+    "Compiler",
+    "CSS",
+    "REACT",
+    "VITE",
+    "CSS framework"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
+  }
+}
