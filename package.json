@@ -1,6 +1,6 @@
 {
   "name": "@blacksquareui/compiler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/app.js",
   "bin": {
     "blacksquare": "dist/app.js"
