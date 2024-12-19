@@ -2,8 +2,13 @@ import { readFile } from 'node:fs';
 import { promisify } from "node:util"
 import { configType } from './types/GeneralClassType';
 
-export const getConfig = async (configFileName: string = "BlackSquareUI.json"): Promise<configType> =>
-    JSON.parse(await promisify(readFile)(configFileName, 'utf-8'));
+export const getConfig = async (configFileName: string = "BlackSquareUI.json"): Promise<configType | false> => {
+    try {
+        return JSON.parse(await promisify(readFile)(configFileName, 'utf-8'));
+    } catch (error) {
+        return false
+    }
+}
 
 export const fakeConfig = (): configType => {
     return {

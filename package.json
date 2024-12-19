@@ -2,6 +2,9 @@
   "name": "@blacksquareui/compiler",
   "version": "0.0.1",
   "main": "dist/app.js",
+  "bin": {
+    "blacksquare": "dist/app.js"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
@@ -33,5 +36,9 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.16.0"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "commander": "^12.1.0"
   }
 }
