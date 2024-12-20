@@ -20,7 +20,7 @@ describe('collectClasses', () => {
 
 describe('createRootStyles', () => {
     test('createRootStyles should generate CSS variables for root element', () => {
-        const styles = createRootStyles(config.props);
+        const styles = createRootStyles(config);
         expect(styles).toContain(styles);
     });
 })

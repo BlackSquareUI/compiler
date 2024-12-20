@@ -13,7 +13,7 @@ const createCSS = async (config: configType): Promise<string> => {
     const { sourceDir, fileExtension } = config.content
     const allFilesContent = await readTextFromDir(sourceDir, fileExtension)
     const classNames = await collectClasses(allFilesContent)
-    return createRootStyles(config.props) + createClassStyles(classNames, config)
+    return createRootStyles(config) + createClassStyles(classNames, config)
 };
 
 const collectClasses = async (text: string) => {
@@ -47,8 +47,14 @@ const readTextFromDir = async (dir: string, fileExtension: string) => {
         .reduce(combineFilesContents, "");
 }
 
-const createRootStyles = (props: GeneralClassType[]): string =>
-    `:root{${props.map(({ name, val, type }) => `--${name}: ${val}${type === 'range' ? 'rem' : ''};`).join('')}}`;
+const createRootStyles = (config: configType): string => {
+    const { props, screens } = config;
+    const createVar = (props: GeneralClassType[], name: string): string => {
+        const getValueWithUnit = ({ val, type }: GeneralClassType) => val + (type === 'range' ? 'rem' : '')
+        return props.reduce((acc, prop) => acc + `--${name}-${prop.name}:(${getValueWithUnit(prop)});`, '')
+    }
+    return `:root{${screens.reduce((acc, { name }: ScreenSize) => acc + createVar(props, name), "")}}`
+}
 
 const createRangeStyles = (className: string, props: GeneralClassType[]): string => {
     const [property, multiplier] = className.includes("_") ? className.split("_") : [className];
@@ -61,7 +67,7 @@ const createRangeStyles = (className: string, props: GeneralClassType[]): string
 
 const createColorStyles = (className: string, props: GeneralClassType[]): string => {
     const { property, name } = getPropByClassName(className, props);
-    return `.${className} {${property}:var(--oo-${name});}`;
+    return `.${className} {${property}: var(--oo-${name}); }`;
 };
 
 const getClassesByPrefix = (classNames: string[], prefix: string): string[] =>
@@ -92,10 +98,10 @@ const processOEClass = (className: string): string => {
     const [prop, styleType] = classNameWithoutPrefix.split("-");
     const styleTypeOrDefault = getStyleTypeOrDefault(styleType, "primary")
 
-    return removeSpaces(`.oe-${prop}-${styleTypeOrDefault}:${prop}{
-        color:var(--oo-background-color-${styleTypeOrDefault});
+    return removeSpaces(`.oe - ${prop} -${styleTypeOrDefault}:${prop} {
+        color: var(--oo-background-color-${styleTypeOrDefault});
         background-color:var(--oo-text-color-${styleTypeOrDefault})
-    }`)
+    } `)
 }
 
 const addSeparator = (className: string) => className + "__"
